@@ -1,4 +1,9 @@
+'use client'
+import { useState, FormEvent, ChangeEvent } from "react";
+import { supabase } from '../supabase-client';
+
 export default function Page() {
+    const [newTask, setNewtask] = useState({name: "", password: ""});
   return <div className="login-container">
         <div className="form-content">
             <div className="logo-section">
@@ -37,13 +42,13 @@ export default function Page() {
                 
                 <button type="submit" className="login-btn" id="loginBtn">
                     <span className="spinner" id="spinner"></span>
-                    <span id="btnText">Sign In to Art-Haven</span>
+                    <span id="btnText">Sign Up to Art-Haven</span>
                 </button>
             </form>
             
             <div className="divider"></div>
             <div className="signup-link">
-                New to Art-Haven? <a href="Create_portfolio.html">Create your portfolio</a>
+                Already have an account? <a href="Create_portfolio.html">log in</a>
             </div>
         </div>
     </div>

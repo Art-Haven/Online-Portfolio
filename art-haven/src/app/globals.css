@@ -157,6 +157,16 @@
             opacity: 0.8;
         }
 
+        .link-button {
+        background: none;
+        border: none;
+        color: #0070f3;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 0;
+        font: inherit;
+        }
+
         .spinner {
             display: none;
             width: 20px;

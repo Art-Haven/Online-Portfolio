@@ -1,13 +1,15 @@
 'use client'
-
+import { useRouter } from 'next/navigation';
 import { useState, FormEvent } from "react";
 import { supabase } from '../../supabase-client';
+import Image from 'next/image';
 
 const AuthPage = () => {
     const [isSigningUp, setIsSigningUp] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -19,12 +21,14 @@ const AuthPage = () => {
                 setError(signUpError.message);
                 return;
             }
+            setError("Successfully signed up! Please check your email to confirm your account.");
         } else {
             const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
             if (signInError) {
                 setError(signInError.message);
                 return;
             }
+            router.push('/Home');
         }
     };
 
@@ -32,7 +36,7 @@ const AuthPage = () => {
         <div className="login-container">
             <div className="form-content">
                 <div className="logo-section">
-                    <img src="/Img/LOGO.jpg" alt="Art-Haven Logo" className="logo-image"/>
+                    <Image src="/LOGO.jpg" alt="Art-Haven Logo" className="logo-image" width={100} height={100} />
                     <div className="logo">
                         <h1>Art-Haven</h1>
                     </div>
@@ -51,13 +55,7 @@ const AuthPage = () => {
                         <label htmlFor="password">Password</label>
                         <input type="password" id="password" name="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Enter any password (6+ chars)"/>
                     </div>
-                    <div className="form-options">
-                        <div className="remember-me">
-                            <input type="checkbox" id="remember" name="remember"/>
-                            <label htmlFor="remember">Remember me</label>
-                        </div>
-                        <a href="#" className="forgot-password">Forgot password?</a>
-                    </div>
+
                     <button type="submit" className="login-btn" id="loginBtn">
                         <span id="btnText">{isSigningUp ? "Sign Up to Art-Haven" : "Sign In to Art-Haven"}</span>
                     </button>
@@ -67,7 +65,7 @@ const AuthPage = () => {
                     {isSigningUp ? (
                         <>Already have an account? <button type="button" className="link-button" onClick={() => setIsSigningUp(false)}>Sign In</button></>
                     ) : (
-                        <>Don't have an account? <button type="button" className="link-button" onClick={() => setIsSigningUp(true)}>Sign Up</button></>
+                        <>Don&apos;t have an account? <button type="button" className="link-button" onClick={() => setIsSigningUp(true)}>Sign Up</button></>
                     )}
                 </div>
             </div>
